@@ -6,11 +6,13 @@
 /*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:08:38 by jmoulin           #+#    #+#             */
-/*   Updated: 2023/11/07 19:08:38 by jmoulin          ###   ########.ch       */
+/*   Updated: 2023/11/07 19:08:41 by jmoulin          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PRINTF_H
 # define PRINTF_H
+
+#include "../libft/libft.h"
 
 #endif
