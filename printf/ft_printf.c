@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   libftprintf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/08 17:55:27 by jmoulin           #+#    #+#             */
-/*   Updated: 2023/11/08 17:55:27 by jmoulin          ###   ########.ch       */
+/*   Created: 2023/11/08 20:20:36 by jmoulin           #+#    #+#             */
+/*   Updated: 2023/11/08 20:20:36 by jmoulin          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@ int	ft_print_percent(void)
 	return (1);
 }
 
-int	ft_parse_format(const char *format, int *i, va_list args)
+int	ft_parse_format(const char *format, int i, va_list args)
 {
 	int	count;
 
 	count = 0;
-	if (format[*i] == 'c')
+	if (format[i] == 'c')
 		count += ft_print_char(args);
-	else if (format[*i] == 's')
+	else if (format[i] == 's')
 		count += ft_print_string(args);
-	else if (format[*i] == 'p')
+	else if (format[i] == 'p')
 		count += ft_print_pointer(args);
-	else if (format[*i] == 'd' || format[*i] == 'i')
+	else if (format[i] == 'd' || format[i] == 'i')
 		count += ft_print_decimal(args);
-	else if (format[*i] == 'u')
+	else if (format[i] == 'u')
 		count += ft_print_unsigned_decimal(args);
-	else if (format[*i] == 'x' || format[*i] == 'X')
-		count += ft_print_hexadecimal(args, format[*i]);
-	else if (format[*i] == '%')
+	else if (format[i] == 'x' || format[i] == 'X')
+		count += ft_print_hexadecimal(args, format[i]);
+	else if (format[i] == '%')
 		count += ft_print_percent();
 	return (count);
 }
@@ -54,7 +54,7 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			count += ft_parse_format(format, &i, args);
+			count += ft_parse_format(format, i, args);
 		}
 		else
 		{

@@ -1,5 +1,5 @@
 
-SRCS	= ft_printf.c utils.c print.c
+SRCS	= utils.c print.c ft_printf.c
 
 OBJS	= ${SRCS:.c=.o}
 
@@ -25,4 +25,3 @@ fclean:		clean
 			${RM} ${NAME}
 
 re:			fclean all
-
