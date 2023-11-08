@@ -1,50 +1,28 @@
 
-NAME = myproject
+SRCS	= ft_printf.c utils.c print.c
 
-# Directories
-SRCDIR = srcs/
+OBJS	= ${SRCS:.c=.o}
 
-OBJDIR = objs/
-INCDIR = includes/
-LIBDIR = libft/
+NAME	= libftprintf.a
 
-# Sources
-SRC = main.c
+CC		= gcc
+RM		= rm -f
 
-# Objects
-OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
+CFLAGS 	= -Wall -Wextra -Werror
 
-# Includes
-INC = -I $(INCDIR) -I $(LIBDIR)$(INCDIR)
+all:		${NAME}
 
-# Compiler
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+.c.o:
+		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-# Libraries
-LIB = $(LIBDIR)libft.a 
+${NAME}:	${OBJS}
+			ar rcs ${NAME} ${OBJS}
 
-# Rules
-all: $(NAME)
+clean:  
+			${RM} ${OBJS}
 
-$(NAME): $(OBJ) $(LIB)
-	ar rcs $(NAME).a $(OBJ) $(LIB)
+fclean:		clean
+			${RM} ${NAME}
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+re:			fclean all
 
-$(LIB):
-	make -C $(LIBDIR)
-
-clean:
-	rm -rf $(OBJDIR)
-	make -C $(LIBDIR) clean
-
-fclean: clean
-	rm -f $(NAME).a
-	make -C $(LIBDIR) fclean
-
-re: fclean all
-
-.PHONY: all clean fclean re

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmoulin <jmoulin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 23:28:33 by nojito            #+#    #+#             */
-/*   Updated: 2023/11/01 18:07:54 by jmoulin          ###   ########.fr       */
+/*   Created: 2023/11/07 23:14:20 by jmoulin           #+#    #+#             */
+/*   Updated: 2023/11/07 23:14:28 by jmoulin          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
+size_t	ft_strlen(const char *s);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
 char	*ft_strmapi(const char *s, char (*f)(unsigned int, char));
