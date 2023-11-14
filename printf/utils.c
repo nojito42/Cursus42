@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 07/11/2023 23:42:08 by jmoulin           #+#    #+#             */
-/*   Updated: 14/11/2023 16:49:24 by jmoulin          ###   ########.ch       */
+/*   Created: 2023/11/14 21:05:11 by jmoulin           #+#    #+#             */
+/*   Updated: 2023/11/14 21:05:32 by jmoulin          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ size_t	ft_strlen(const char *s)
 		len++;
 	return (len);
 }
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char *str)
-{
-	write(1, str, ft_strlen(str));
-}
-
 int	ft_print_string(va_list args)
 {
 	char	*str;
@@ -41,7 +30,7 @@ int	ft_print_string(va_list args)
 	if (!str)
 		str = "(null)";
 	len = ft_strlen(str);
-	ft_putstr(str);
+	write(1,str,ft_strlen(str));
 	return (len);
 }
 
@@ -52,7 +41,6 @@ int	ft_putnbr_base(unsigned int nb, char *base)
 	len = 0;
 	if (nb >= ft_strlen(base))
 		len += ft_putnbr_base(nb / ft_strlen(base), base);
-	ft_putchar(base[nb % ft_strlen(base)]);
-	len++;
+	len += write(2,&base[nb % ft_strlen(base)],1);
 	return (len);
 }

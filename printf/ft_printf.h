@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 10:49:09 by jmoulin           #+#    #+#             */
-/*   Updated: 2023/11/14 10:49:09 by jmoulin          ###   ########.ch       */
+/*   Created: 2023/11/14 21:21:06 by jmoulin           #+#    #+#             */
+/*   Updated: 2023/11/14 21:21:15 by jmoulin          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ typedef struct s_vars
 }			t_vars;
 
 size_t		ft_strlen(const char *s);
-void		ft_putchar(char c);
-void		ft_putstr(char *str);
 int			ft_print_string(va_list args);
 int			ft_putnbr_base(unsigned int nb, char *base);
 int			ft_printf(const char *format, ...);

@@ -6,7 +6,7 @@
 /*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:24:29 by jmoulin           #+#    #+#             */
-/*   Updated: 2023/11/14 17:32:04 by jmoulin          ###   ########.ch       */
+/*   Updated: 2023/11/14 21:24:15 by jmoulin          ###   ########.ch       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int	main(void)
 	ft_printf("Hello %X\n", 42);
 	ft_printf("Hello %p\n", 42);
 	ft_printf("Hello %%\n");
+    ft_printf("Hello %% %-%%%%%i %d\n", 42,42342);
 	return (0);
 }
