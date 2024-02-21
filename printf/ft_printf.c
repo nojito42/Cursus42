@@ -3,51 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: nojito <nojito@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 21:20:55 by jmoulin           #+#    #+#             */
-/*   Updated: 2023/11/14 21:20:55 by jmoulin          ###   ########.ch       */
+/*   Created: 2024/02/18 17:26:53 by jmoulin           #+#    #+#             */
+/*   Updated: 2024/02/21 15:23:24 by nojito           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_parse(const char *format, int i, struct s_vars *v)
+static int	ft_parse(const char *format, struct s_vars *v)
 {
-	while (format[i])
+	while (*format)
 	{
-		if (format[i] == '%')
+		if (*format == '%' && contains(*(format + 1), FLAGS))
 		{
-			i++;
-			if (format[i] == 'c')
-				v->count += ft_print_char(v->args);
-			else if (format[i] == 's')
-				v->count += ft_print_string(v->args);
-			else if (format[i] == 'p')
-				v->count += ft_print_pointer(v->args);
-			else if (format[i] == 'd' || format[i] == 'i')
-				v->count += ft_print_decimal(v->args);
-			else if (format[i] == 'u')
-				v->count += ft_print_unsigned_decimal(v->args);
-			else if (format[i] == 'x' || format[i] == 'X')
-				v->count += ft_print_hexadecimal(v->args, format[i]);
-			else if (format[i] == '%')
-				v->count += write(2, "%%", 1);
+			v->flag = *(format + 1);
+			format++;
+			if (contains(v->flag, "cs"))
+				print_sc(v);
+			else if (contains(v->flag, "pxX"))
+				print_px(v);
+			else if (contains(v->flag, "id"))
+				v->cnt += putnbr_id(va_arg(v->args, int), "0123456789");
+			else if (contains(v->flag, "u"))
+				v->cnt += putnbr_upx(v, va_arg(v->args, uint32_t),
+						"0123456789");
+			else
+				v->cnt += write(1, "%%", 1);
 		}
 		else
-			v->count += write(2, &format[i], 1);
-		i++;
+			v->cnt += write(1, format, 1);
+		if (v->cnt < 0)
+			break ;
+		format++;
 	}
+	return (v->cnt);
 }
+
 int	ft_printf(const char *format, ...)
 {
-	t_vars	v;
-	int		i;
+	struct s_vars	v;
 
-	i = 0;
-	v.count = 0;
+	v.cnt = 0;
 	va_start(v.args, format);
-	ft_parse(format, i, &v);
+	if (ft_parse(format, &v) < 0)
+		return (-1);
 	va_end(v.args);
-	return (v.count);
+	return (v.cnt);
 }

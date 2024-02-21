@@ -3,44 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: nojito <nojito@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 21:05:11 by jmoulin           #+#    #+#             */
-/*   Updated: 2023/11/14 21:05:32 by jmoulin          ###   ########.ch       */
+/*   Created: 2024/02/18 17:27:08 by jmoulin           #+#    #+#             */
+/*   Updated: 2024/02/20 22:12:29 by nojito           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-size_t	ft_strlen(const char *s)
+int	contains(char c, char *s)
 {
-	size_t	len;
+	while (*s && *s != c)
+		s++;
+	return (*s == c);
+}
+
+unsigned long	ft_strlen(const char *s)
+{
+	unsigned long	len;
 
 	len = 0;
-	while (s[len])
+	while (*s++)
 		len++;
 	return (len);
 }
-int	ft_print_string(va_list args)
-{
-	char	*str;
-	int		len;
 
-	str = va_arg(args, char *);
-	if (!str)
-		str = "(null)";
-	len = ft_strlen(str);
-	write(1,str,ft_strlen(str));
+int	putnbr_id(long long int nb, char *base)
+{
+	int	len;
+
+	len = 0;
+	if (nb < 0)
+	{
+		len += write(1, "-", 1);
+		nb = -nb;
+	}
+	if (nb >= (long long)ft_strlen(base))
+		len += putnbr_id(nb / ft_strlen(base), base);
+	len += write(1, &base[nb % ft_strlen(base)], 1);
 	return (len);
 }
 
-int	ft_putnbr_base(unsigned int nb, char *base)
+int	putnbr_upx(struct s_vars *v, unsigned long long nb, char *base)
 {
 	int	len;
 
 	len = 0;
 	if (nb >= ft_strlen(base))
-		len += ft_putnbr_base(nb / ft_strlen(base), base);
-	len += write(2,&base[nb % ft_strlen(base)],1);
+		len += putnbr_upx(v, nb / ft_strlen(base), base);
+	len += write(1, &base[nb % ft_strlen(base)], 1);
 	return (len);
 }

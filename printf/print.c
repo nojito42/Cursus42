@@ -3,42 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmoulin <jmoulin@student.42lausanne.ch>    +#+  +:+       +#+        */
+/*   By: nojito <nojito@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 21:20:21 by jmoulin           #+#    #+#             */
-/*   Updated: 2023/11/14 21:20:50 by jmoulin          ###   ########.ch       */
+/*   Updated: 2024/02/20 23:24:57 by nojito           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_print_char(va_list args)
+void	print_sc(struct s_vars *s)
 {
-	char	c;
+	char	*str;
+	int		chr;
 
-	c = va_arg(args, int);
-	return (write(2, &c, 1));
+	if (s->flag == 'c')
+	{
+		chr = va_arg(s->args, int);
+		s->cnt += write(1, &chr, 1);
+		return ;
+	}
+	str = va_arg(s->args, char *);
+	if (!str)
+		str = "(null)";
+	s->cnt += write(1, str, ft_strlen(str));
 }
 
-int	ft_print_pointer(va_list args)
+void	print_px(struct s_vars *v)
 {
-	return (write(2, "0x", ft_strlen("0x")) + ft_putnbr_base(va_arg(args,
-				__intptr_t), "0123456789abcdef"));
-}
+	uintptr_t	ptr;
 
-int	ft_print_decimal(va_list args)
-{
-	return (ft_putnbr_base(va_arg(args, int), "0123456789"));
-}
-
-int	ft_print_unsigned_decimal(va_list args)
-{
-	return (ft_putnbr_base(va_arg(args, unsigned int), "0123456789"));
-}
-
-int	ft_print_hexadecimal(va_list args, char c)
-{
-	if (c == 'x')
-		return (ft_putnbr_base(va_arg(args, unsigned int), "0123456789abcdef"));
-	return (ft_putnbr_base(va_arg(args, unsigned int), "0123456789ABCDEF"));
+	ptr = va_arg(v->args, uintptr_t);
+	if (v->flag == 'p')
+	{
+		v->cnt += write(1, "0x", 2);
+		v->cnt += putnbr_upx(v, ptr, "0123456789abcdef");
+	}
+	else
+	{
+		if (v->flag == 'x')
+			v->cnt += putnbr_upx(v, (uint32_t)ptr, "0123456789abcdef");
+		else
+			v->cnt += putnbr_upx(v, (uint32_t)ptr, "0123456789ABCDEF");
+	}
 }
